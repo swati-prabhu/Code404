@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Buddy App</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #1E90FF; /* Blue */
+        }
+
+        /* Container Centering */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease-in-out;
+            width: 100%;
+            max-width: 400px; /* Set a max width for the container */
+            overflow-y: auto; /* Enable scrolling if content exceeds height */
+        }
+
+        /* Welcome Page Styles */
+        .welcome-container {
+            text-align: center;
+            opacity: 1;
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #ffffff;
+            color: #1E90FF;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 30px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Login/Signup Page Styles */
+        .login-container {
+            display: none;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-container h2 {
+            margin-bottom: 20px;
+            color: #1E90FF;
+            font-size: 1.8em;
+        }
+
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+
+        .login-container button {
+            background-color: #1E90FF;
+            color: white;
+            padding: 12px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1em;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-container button:hover {
+            background-color: #1C86EE;
+        }
+
+        .login-container a {
+            color: #1E90FF;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .login-container a:hover {
+            text-decoration: underline;
+        }
+
+        /* Subject Buttons */
+        .subject-container {
+            background-color: #f1f1f1; /* Light background */
+            padding: 20px;
+            border-radius: 15px; /* Rounded corners */
+            box-shadow : 0px 6px 15px rgba(0, 0, 0, 0.1); /* Shadow effect */
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .subject-heading {
+            font-size: 1.8em;
+            color: #1E90FF; /* Match main theme color */
+            font-weight: bold;
+            margin-bottom : 20px;
+        }
+
+        /* Subject Buttons Enhancements */
+        .subject-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Space between buttons */
+        }
+
+        .btn {
+            padding: 15px 0;
+            font-size: 1.2em;
+            border-radius: 20px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        .physics {
+            background-color: #FF5733; /* Red for Physics */
+        }
+
+        .chemistry {
+            background-color: #FFBD33; /* Yellow for Chemistry */
+        }
+
+        .maths {
+            background-color: #33FF57; /* Green for Maths */
+        }
+
+        .biology {
+            background-color: #3357FF; /* Blue for Biology */
+        }
+
+        .timetable {
+            background-color: #8E44AD; /* Purple for Timetable */
+        }
+
+        .early-bird {
+            background-color: #FFC107; /* Orange for Early Bird */
+        }
+
+        .night-owl {
+            background-color: #2196F3; /* Blue for Night Owl */
+        }
+
+        .btn:hover {
+            opacity: 1;
+        }
+
+        .btn:active {
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+
+        /* Subject Section Containers */
+        .subject-section {
+            border: 2px solid #008CBA; /* Border color */
+            padding: 20px; /* Increased padding for more space */
+            width: 90%; /* Increase the width to fill more space */
+            max-width: 1600px; /* Set a max width for the container */
+            margin: 20px auto; /* Center the container */
+            border-radius: 10px; /* Optional: rounded corners */
+            background-color: #f9f9f9; /* Optional: background color */
+            height:2000px;
+        }
+
+        .header {
+            background-color: #f1f1f1; /* Background color for the header */
+            padding: 10px;
+            text-align: center;
+            font-size: 28px; /* Adjusted font size */
+            font-weight: bold; /* Ensures the text is bold */
+            color: #1E90FF; /* Text color */
+            margin-bottom: 20px; /* Space below the header */
+            border-radius: 5px; /* Optional: rounded corners */
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Footer Styles */
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            color: white;
+            font-size: 0.9em;
+        }
+
+        /* Timetable Options Styles */
+        .timetable-container {
+            display: none;
+            background-color: #f1f1f1; /* Light background */
+            padding: 20px;
+            border-radius: 15px; /* Rounded corners */
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1); /* Shadow effect */
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .timetable-heading {
+            font-size: 1.8em;
+            color: #1E90FF; /* Match main theme color */
+            font-weight: bold;
+            margin-bottom : 20px;
+        }
+
+        .timetable-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Space between buttons */
+        }
+    </style>
+</head>
+<body>
+
+  <!-- Welcome Page -->
+  <div class="container welcome-container" id="welcomePage">
+    <h1>WELCOME TO STUDY BUDDY APP</h 1>
+    <button onclick="showLoginPage()">GET STARTED</button>
+  </div>
+
+  <!-- Login/Signup Page -->
+  <div class="container login-container" id="loginPage">
+    <h2>LOGIN/SIGNUP</h2>
+    <input type="text" id="username" placeholder="Username" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <a href="#">Forgot Password?</a>
+    <button type="submit" onclick="validateLogin()">LOGIN</button>
+  </div>
+
+ <!-- Subject Buttons -->
+<div class="container subject-container" id="subjectPage" style="display: none;">
+    <h2 class="subject-heading">Choose a Subject</h2>
+    <div class="subject-buttons">
+        <button class="btn physics" onclick="showPhysicsSection()">PHYSICS</button>
+        <button class="btn chemistry" onclick="showChemistrySection()">CHEMISTRY</button>
+        <button class="btn maths" onclick="showMathsSection()">MATHS</button>
+        <button class="btn biology" onclick="showBiologySection()">BIOLOGY</button>
+        <button class="btn timetable" onclick="showTimetableOptions()">TIMETABLE</button>
+    </div>
+</div>
+
+<!-- Timetable Options -->
+<div class="container timetable-container" id="timetableOptions" style="display: none;">
+    <h2 class="timetable-heading">Choose Your Timetable Preference</h2>
+    <div class="timetable-options">
+        <button class="btn early-bird" onclick="selectEarlyBird()">EARLY BIRD</button>
+        <button class="btn night-owl" onclick="selectNightOwl()">NIGHT OWL</button>
+    </div>
+</div>
+
+<!-- Physics Section -->
+<div class="subject-section" id="physicsSection" style="display: none;">
+    <div class="header">PHYSICS</div>
+    <div class="row" style="display: flex; justify-content: center; margin-bottom: 20px;">
+        <div style="margin: 5px;">
+            <button class="button" style="background-color: #FF5733;" onclick="window.location.href='https://www.example.com/physics/chapters'">All Chapters</button>
+        </div>
+        <div style="margin: 5px;">
+            <button class="button" style ="background-color: #33FF57;" onclick="window.location.href='https://www.example.com/physics/test'">Take Test</button>
+        </div>
+        <div style="margin: 5px;">
+            <button class="button" style="background-color: #3357FF;" onclick="window.location.href='https://www.example.com/physics/score'">View Score</button>
+        </div>
+        <div style="margin: 5px;">
+            <button class="button" style="background-color: #FFBD33;" onclick="window.location.href='https://www.example.com/physics/resources'">Study Resources</button>
+        </div>
+        <div style="margin: 5px;">
+            <button class="button" style="background-color: #8E44AD;" onclick="window.location.href='https://www.example.com/physics/video-lessons'">Video Lessons</button>
+        </div>
+    </div>
+    
+    <!-- Chapter List -->
+    <div class="chapter-list" style="margin-top: 20px; text-align: left; padding: 20px; background-color: #f0f8ff; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+        <h3 style="color: #1E90FF; margin-bottom: 15px;">1st PUC Physics Chapters:</h3>
+        <ul style="list-style-type: none; padding-left: 0;">
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">1. Physical world</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">2. Units and Measurements</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">3. Motion in a Straight Line</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">4. Motion in a Plane</li>
+            <li style="margin-bottom: 10 px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">5. Laws of Motion</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">6. Work, Energy and Power</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">7. System of Particles and Rotational Motion</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">8. Gravitation</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">9. Mechanical Properties of solids</li>
+<li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">10. Mechanical Properties of fluids</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">11. Therm odynamics</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">12.Kinetic theory of gased</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">13. Oscillations</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">14. Waves</li>
+        </ul>
+
+        <h3 style="color: #1E90FF; margin-bottom: 15px;">2nd PUC Physics Chapters:</h3>
+        <ul style="list-style-type: none; padding-left: 0;">
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px ;">1. Electric charges and fields</li>
+ <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">2.Electrostatic potential and capacitance</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">3. Current Electricity</li>
+<li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">4.Moving charges and Magnetism</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">5.Magnetism and matter</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">6. Electromagnetic Induction</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">7.Alternating current</li>
+<li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">8.Electromagnetic waves</li>
+
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">9. Ray Optics</li>
+ <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">10.Wave Optics</li>
+
+
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">11. Dual Nature of Radiation and Matter</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">12.Atoms</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: # e7f3fe; border-radius: 5px;">13.Nuclei</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Chemistry Section -->
+<div class="subject-section" id="chemistrySection" style="display: none;">
+    <div class="header">CHEMISTRY</div>
+    <div class="row" style="display: flex; justify-content: center; margin-bottom: 20px;">
+        <div style="margin: 5px;">
+            <button class="button" style="background-color: #FFBD33;" onclick="window.location.href='https://www.example.com/chemistry/chapters'">All Chapters</button>
+        </div>
+        <div style="margin: 5px;">
+            <button class="button" style="background-color: #33FF57;" onclick="window.location.href='https://www.example.com/chemistry/test'">Take Test</button>
+        </div>
+        <div style="margin: 5px;">
+            <button class="button" style="background-color: #3357FF;" onclick="window.location.href='https://www.example.com/chemistry/score'">View Score</button>
+        </div>
+        <div style="margin: 5px;">
+            <button class="button" style="background-color: #FF5733;" onclick="window.location.href='https://www.example.com/chemistry/resources' ">Study Resources</button>
+        </div>
+        <div style="margin: 5px;">
+            <button class="button" style="background-color: #8E44AD;" onclick="window.location.href='https://www.example.com/chemistry/video-lessons'">Video Lessons</button>
+        </div>
+    </div>
+
+    <!-- Chapter List -->
+    <div class="chapter-list" style="margin-top: 20px; text-align: left; padding: 20px; background-color: #f0f8ff; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+        <h3 style="color: #1E90FF; margin-bottom: 15px;">1st PUC Chemistry Chapters:</h3>
+        <ul style="list-style-type: none; padding-left: 0;">
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3 fe; border-radius: 5px;">1. Some Basic Concepts of Chemistry</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">2. Structure of Atom</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">3. Classification of Elements and Periodicity in Properties</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">4. Chemical Bonding and Molecular Structure</li>
+        
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">5. Thermodynamics</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">6. Equilibrium</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">7. Redox Reactions</li>
+           
+                       <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">8. Organic Chemistry - Some Basic Principles and Techniques</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">9. Hydrocarbons</li>
+         
+        </ul>
+
+        <h3 style="color: #1E90FF; margin-bottom: 15px;">2nd PUC Chemistry Chapters:</h3>
+        <ul style="list-style-type: none; padding-left: 0;">
+            
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">1. Solutions</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">2. Electrochemistry</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">3. Chemical Kinetics</li>
+             
+           
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">4. d and f Block Elements</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">5. Coordination Compounds</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">6. Haloalkanes and Haloarenes</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">7. Alcohols, Phenols, and Ethers</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">8. Aldehydes, Ketones and Carboxylic Acids</li>
+            <li style=" margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">9. Organic Compounds Containing Nitrogen</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">10. Biomolecules</li>
+                   </ul>
+    </div>
+</div>
+<!-- Mathematics Section -->
+<div class="subject-section" id="mathsSection" style="display: none;">
+    <div class="header">MATHEMATICS</div>
+    <div class="row" style="display: flex; justify-content: center; margin-bottom: 20px;">
+        <div style="margin: 5px;">
+            <button class="button" style="background-color: #FFBD33;" onclick="window.location.href='https://www.example.com/mathematics/chapters'">All Chapters</button>
+        </div>
+        <div style="margin: 5px;">
+ <button class="button" style="background-color: #33FF57;" onclick="window.location.href='https://www.example.com/mathematics/test'">Take Test</button>
+        </div>
+        <div style="margin: 5px;">
+            <button class="button" style="background-color: #3357FF;" onclick="window.location.href='https://www.example.com/mathematics/score'">View Score</button>
+        </div>
+        <div style="margin: 5px;">
+            <button class="button" style="background-color: #FF5733;" onclick="window.location.href='https://www.example.com/mathematics/resources'">Study Resources</button>
+        </div>
+        <div style="margin: 5px;">
+            <button class="button" style="background-color: #8E44AD;" onclick="window.location.href='https://www.example.com/mathematics/video-lessons'">Video Lessons</button>
+        </div>
+    </div>
+
+    <!-- Chapter List -->
+    <div class="chapter-list" style="margin-top: 20px; text-align: left; padding: 20px; background-color: #f0f8ff; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+        <h3 style="color: #1E90FF; margin-bottom: 15px;">1st PUC Mathematics Chapters:</h3>
+        <ul style="list-style-type: none; padding-left: 0;">
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">1. Sets</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">2. Relations and Functions</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">3. Trigonometry</li>
+            
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">6. Complex Numbers</li>
+            <li style="margin -bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">7. Linear Inequalities</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">8. Permutations and Combinations</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">9. Binomial Theorem</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">10. Sequence and Series</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">11. Straight Lines</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">12. Conic Sections</li>
+           <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">13. Introduction to 3Dimensional Geometry</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">14. Limits and Derivatives</li>
+          
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">15. Statistics</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">16. Probability</ li>
+        </ul>
+
+        <h3 style="color: #1E90FF; margin-bottom: 15px;">2nd PUC Mathematics Chapters:</h3>
+        <ul style="list-style-type: none; padding-left: 0;">
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">1. Relations and Functions</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">2. Inverse Trigonometric Functions</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">3. Matrices</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">4. Determinants</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">5. Continuity and Differentiability</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">6. Applications of Derivatives</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">7. Integrals</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">8. Applications of Integrals</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">9. Differential Equations</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">10. Vector Algebra</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">11. Three-Dimensional Geometry</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">12. Linear Programming</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: # e7f3fe; border-radius: 5px;">13. Probability</li>
+           
+        </ul>
+    </div>
+</div>
+
+<!-- Biology Section -->
+<div class="subject-section" id="biologySection" style="display: none;">
+    <div class="header">BIOLOGY</div>
+    <div class="row" style="display: flex; justify-content: center; margin-bottom: 20px;">
+        <div style="margin: 5px;">
+            <button class="button" style="background-color: #3357FF;" onclick="window.location.href='https://www.example.com/biology/chapters'">All Chapters</button>
+        </div>
+        <div style="margin: 5px;">
+            <button class="button" style="background-color: #33FF57;" onclick="window.location.href='https://www.example.com/biology/test'">Take Test</button>
+        </div>
+        <div style="margin: 5px;">
+            <button class="button" style="background-color: #FF5733;" onclick="window.location.href='https://www.example.com/biology/score'">View Score</button>
+        </div>
+        <div style="margin: 5px;">
+            <button class="button" style="background-color: #FFBD33;" onclick="window.location.href='https://www.example.com/biology/resources' ">Study Resources</button>
+        </div>
+        <div style="margin: 5px;">
+            <button class="button" style="background-color: #8E44AD;" onclick="window.location.href='https://www.example.com/biology/video-lessons'">Video Lessons</button>
+        </div>
+    </div>
+
+    <!-- Chapter List -->
+    <div class="chapter-list" style="margin-top: 20px; text-align : left; padding: 20px; background-color: #f0f8ff; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+        <h3 style="color: #1E90FF; margin-bottom: 15px;">1st PUC Biology Chapters:</h3>
+        <ul style="list-style-type: none; padding-left: 0;">
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">1. The living world</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">2. Biological Classification</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">3. Plank Kingdom</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">4. Animal Kingdom</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">5. Morphology of Flowering Plants</li>
+<li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">6.Anatomy of Flowering Plants</li>
+<li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">7.Structural Organization in Animals</li>
+<li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">8.Cell:The Unit of Life</li>
+<li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">9.Biolmolecules</li>
+<li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">10.Cell cycle and cell division</li>
+<li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">11.Photosynthesis in Higher Plants</li>
+<li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">12.Respiration in Plants</li>
+<li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">13.Plant growth and Development</li>
+<li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">14.Breathing and Exchange of gases</li>
+<li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">15.Body Fluids and Circulation</li>
+<li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">16.Excretory Products and their elimination</li>
+<li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">17.Locomotion and Movement</li>
+<li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">18.Neural Control and Coordination</li>
+<li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">19.Chemical Coordination and Integration</li>
+
+
+
+        </ul>
+
+        <h3 style="color: #1E90FF; margin-bottom: 15px;">2nd PUC Biology Chapters:</h3>
+        <ul style="list-style-type: none; padding-left: 0;">
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">1. Reproduction in Organisms</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">2.Sexual Reproduction Flowering Plants</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">3. Human Reproduction</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">4. Reproductive health</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">5. Principles of Inheritance           and variation</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">6.Molecular basis of   Inheritance</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">7.Evolution</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">8.Human Health and Disease</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">9.Stratergies for Enhancement in food production</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">10.Microbes in Human Welfare</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">11.Biotechnolgy:Principles and Processes</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">12.Biotechnolgy and its Application</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">13.Organisms and Population</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">14.Ecosystems</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">15.Biodiversity and Conservation</li>
+            <li style="margin-bottom: 10px; padding: 10px; background-color: #e7f3fe; border-radius: 5px;">16.Environmental Issues</li>
+
+        </ul>
+    </div>
+</div>
+
+  <script>
+    function showLoginPage() {
+      document.getElementById("welcomePage").style.display = "none";
+      document.getElementById("loginPage").style.display = " flex";
+    }
+
+    function validateLogin() {
+        const username = document.getElementById("username");
+        const password = document.getElementById("password");
+
+        // Reset placeholder text
+        username.placeholder = "Username";
+        password.placeholder = "Password";
+
+        // Check if username and password are filled
+        if (!username.value) {
+            username.placeholder = "Username (required)";
+            username.focus(); // Focus on the username field
+        }
+        
+        if (!password.value) {
+            password.placeholder = "Password (required)";
+            password.focus(); // Focus on the password field if username is filled
+        }
+        
+        // If both fields are filled, show the subject page
+        if (username.value && password.value) {
+            showSubjectPage();
+        }
+    }
+
+    function showSubjectPage() {
+      document.getElementById("loginPage").style.display = "none";
+      document.getElementById("subjectPage").style.display = "flex";
+    }
+
+    function showPhysicsSection() {
+      document.getElementById("subjectPage").style.display = "none";
+      document.getElementById("physicsSection").style.display = "block"; // Show the physics section
+    }
+
+    function showChemistrySection() {
+      document.getElementById("subjectPage").style.display = "none";
+      document.getElementById("chemistrySection").style.display = "block"; // Show the chemistry section
+    }
+
+    function showMathsSection() {
+      document.getElementById("subjectPage").style.display = "none";
+      document.getElementById("mathsSection").style.display = "block"; // Show the maths section
+    }
+
+    function showBiologySection() {
+      document.getElementById("subjectPage").style.display = "none";
+      document.getElementById("biologySection").style.display = "block"; // Show the biology section
+    }
+
+    function showTimetableOptions() {
+        document.getElementById("subjectPage").style.display = "none"; // Hide subject page
+        document.getElementById("timetableOptions").style.display = "flex"; // Show timetable options
+    }
+
+    function selectEarlyBird() {
+        alert("You selected Early Bird!");
+        // Additional functionality can be added here
+    }
+
+    function selectNightOwl() {
+        alert("You selected Night Owl!");
+        // Additional functionality can be added here
+    }
+    function selectEarlyBird() {
+        alert("You selected Early Bird!");
+        // Display the timetable
+        document.getElementById("timetableOptions").style.display = "none"; // Hide timetable options
+        showEarlyBirdTimetable(); // Call the function to show the timetable
+    }
+
+   
+    function selectEarlyBird() {
+     
+        // Display the timetable
+        document.getElementById("timetableOptions").style.display = "none"; // Hide timetable options
+        showEarlyBirdTimetable(); // Call the function to show the timetable
+    }
+// Array of motivational quotes
+const quotes = [
+    "Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful.",
+    "The future belongs to those who believe in the beauty of their dreams.",
+    "Don't watch the clock; do what it does. Keep going.",
+    "The only way to do great work is to love what you do.",
+    "Believe you can and you're halfway there.",
+    "Your limitation—it's only your imagination.",
+    "Push yourself, because no one else is going to do it for you.",
+    "Great things never come from comfort zones.",
+    "Dream it. Wish it. Do it.",
+    "Success doesn’t just find you. You have to go out and get it."
+];
+// Function to get a random quote
+function getRandomQuote() {
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    return quotes[randomIndex];
+}
+
+    function showEarlyBirdTimetable() {
+        const timetableHTML = `
+            <div class="subject-section" id="earlyBirdTimetable">
+                <div class="header">Early Bird Timetable (4 AM - 9 AM)</div>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <th style="border: 2px solid #000; padding: 5px; background-color: #1E90FF; color: white;">Time</th>
+                        <th style="border: 2px solid #000; padding: 5px; background-color: #1E90FF; color: white;">Monday</th>
+                        <th style="border: 2px solid #000; padding: 5px; background-color: #1E90FF; color: white;">Tuesday</th>
+                        <th style="border: 2px solid #000; padding: 5px; background-color: #1E90FF; color: white;">Wednesday</th>
+                        <th style="border: 2px solid #000; padding: 5px; background-color: #1E90FF; color: white;">Thursday</th>
+                        <th style="border: 2px solid #000; padding: 5px; background-color: #1E90FF; color: white;">Friday</th>
+                        <th style="border: 2px solid #000; padding: 5px; background-color: #1E90FF; color: white;">Saturday</th>
+                    </tr>
+                    <tr>
+                        <td style="border: 2px solid #000; padding: 5px;">4:00 AM</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Mathematics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Physics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Chemistry</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Biology</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Mathematics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Physics</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 2px solid #000; padding: 5px;">5:00 AM</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Physics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Chemistry</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Biology</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Mathematics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Physics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Chemistry</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 2px solid #000; padding: 5px;">6:00 AM</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Chemistry</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Biology</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Mathematics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Physics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Chemistry</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Biology</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 2px solid #000 ; padding: 5px;">7:00 AM</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Biology</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Mathematics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Physics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Chemistry</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Biology</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Mathematics</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 2px solid #000; padding: 5px;">8:00 AM</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Revision</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Revision</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Revision</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Revision</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Revision</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Revision</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 2px solid #000; padding: 5px;">9:00 AM</td>
+                        <td style="border: 2px solid #000; padding: 5px;">College hours</td>
+                        <td style="border: 2px solid #000; padding: 5px;">College hours</td>
+                        <td style="border: 2px solid #000; padding: 5px;">College hours</td>
+                        <td style="border: 2px solid #000; padding: 5px;">College hours</td>
+                        <td style="border: 2px solid #000; padding: 5px;">College hours</td>
+                        <td style="border: 2px solid #000; padding: 5px;">College hours</td>
+                    </tr>
+                </table>
+<div style="margin-top: 70px; font-weight: bold;font-size:30px; color: black;text-align:center;">
+                "${getRandomQuote()}"
+            </div>
+           
+<div style="margin-top: 60px; text-align: center;">
+                <textarea rows="10" placeholder="What did you learn today?" style="width: 90%; max-width: 500px; padding: 10px; border-radius: 10px; border: 1px solid #ddd; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); font-size: 16px; margin: 0 auto;"></textarea>
+            </div>
+
+        `;
+        
+        // Append the timetable to the body or a specific section
+        document.body.insertAdjacentHTML('beforeend', timetableHTML);
+    } 
+function selectNightOwl() {
+        
+        // Display the timetable
+        document.getElementById("timetableOptions").style.display = "none"; // Hide timetable options
+        showNightOwlTimetable(); // Call the function to show the timetable
+    }
+
+    function showNightOwlTimetable() {
+        const timetableHTML = `
+            <div class="subject-section" id="nightOwlTimetable">
+                <div class="header">Night Owl Timetable (5 PM - 12 AM)</div>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <th style="border: 2px solid #000; padding: 5px; background-color: #1E90FF; color: white;">Time</th>
+                        <th style="border: 2px solid #000; padding: 5px; background-color: #1E90FF; color: white;">Monday</th>
+                        <th style="border: 2px solid #000; padding: 5px; background-color: #1E90FF; color: white;">Tuesday</th>
+                        <th style="border: 2px solid #000; padding: 5px; background-color: #1E90FF; color: white;">Wednesday</th>
+                        <th style="border: 2px solid #000; padding: 5px; background-color: #1E90FF; color: white;">Thursday</th>
+                        <th style="border: 2px solid #000; padding: 5px; background-color: #1E90FF; color: white;">Friday</th>
+                        <th style="border: 2px solid #000; padding: 5px; background-color: #1E90FF; color: white;">Saturday</th>
+                    </tr>
+                    <tr>
+                        <td style="border: 2px solid #000; padding: 5px;">5:00 PM</td>
+                        <td style="border: 2px solid # 000; padding: 5px;">Mathematics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Physics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Chemistry</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Biology</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Mathematics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Physics</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 2px solid #000; padding: 5px;">6:00 PM</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Physics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Chemistry</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Biology</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Mathematics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Physics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Chemistry</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 2px solid #000; padding: 5px;">7:00 PM</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Chemistry</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Biology</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Mathematics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Physics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Chemistry</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Biology</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 2px solid #000 ; padding: 5px;">8:00 PM</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Biology</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Mathematics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Physics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Chemistry</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Biology</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Mathematics</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 2px solid #000; padding: 5px;">9:00 PM</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Revision</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Revision</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Revision</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Revision</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Revision</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Revision</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 2px solid #000; padding: 5px;">10:00 PM</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Physics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Chemistry</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Biology</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Maths</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Physics</ td>
+                        <td style="border: 2px solid #000; padding: 5px;">Chemistry</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 2px solid #000; padding: 5px;">11:00 PM</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Maths</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Biology</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Chemistry</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Physics</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Chemistry</td>
+                        <td style="border: 2px solid #000; padding: 5px;">Biology</td>
+                    </tr>
+                                    </table>
+<div style="margin-top: 70px; font-weight: bold;font-size:30px; color: black;text-align:center;">
+                "${getRandomQuote()}"
+
+            </div>
+<div style="margin-top: 60px; text-align: center;">
+                <textarea rows="10" placeholder="What did you learn today?" style="width: 90%; max-width: 500px; padding: 10px; border-radius: 10px; border: 1px solid #ddd; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); font-size: 16px; margin: 0 auto;"></textarea>
+            </div>
+
+        `;
+        
+        // Append the timetable to the body or a specific section
+        document.body.insertAdjacentHTML('beforeend', timetableHTML);
+    }            
+    // Modify the login button to show subject page
+    document.querySelector('.login-container button[type="submit"]').onclick = validateLogin;
+
+    // Modify the physics button to show physics section
+    document.querySelector('.btn.physics').onclick = showPhysicsSection;
+
+    // Modify the chemistry button to show chemistry section
+    document.querySelector('.btn.chemistry').onclick = showChemistrySection;
+
+    // Modify the biology button to show biology section
+    document.querySelector('.btn.biology').onclick = showBiologySection;
+
+    // Modify the maths button to show maths section
+    document.querySelector('.btn.maths').onclick = showMathsSection;
+
+    // Modify the timetable button to show timetable options
+    document.querySelector('.btn.timetable').onclick = showTimetableOptions;
+  </script>
+</body>
+</html>
