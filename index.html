@@ -878,5 +878,24 @@ function selectNightOwl() {
     // Modify the timetable button to show timetable options
     document.querySelector('.btn.timetable').onclick = showTimetableOptions;
   </script>
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBJBruSr4jeyic3Acqkh68lMrgW8kbYrZs",
+    authDomain: "virtual-study-buddy-35743.firebaseapp.com",
+    projectId: "virtual-study-buddy-35743",
+    storageBucket: "virtual-study-buddy-35743.firebasestorage.app",
+    messagingSenderId: "97444292332",
+    appId: "1:97444292332:web:93b59925886114f6aaa7c9"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
 </body>
 </html>
