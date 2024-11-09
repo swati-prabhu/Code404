@@ -307,6 +307,10 @@
         <button class="btn timetable" onclick="showTimetableOptions()">TIMETABLE</button>
     </div>
 </div>
+<div class="streak-counter">
+    <p>Current Streak: <span id="streak-count">0</span> days</p>
+</div>
+<button class="study-btn" onclick="markStudyDone()">Mark Study as Done</button>
 
 <!-- Timetable Options -->
 <div class="container timetable-container" id="timetableOptions" style="display: none;">
@@ -572,7 +576,7 @@
     </div>
 </div>
 
-  <script>
+  <script src="script.js">
     function showLoginPage() {
       document.getElementById("welcomePage").style.display = "none";
       document.getElementById("loginPage").style.display = " flex";
@@ -669,6 +673,7 @@ const quotes = [
     "Dream it. Wish it. Do it.",
     "Success doesn’t just find you. You have to go out and get it."
 ];
+
 // Function to get a random quote
 function getRandomQuote() {
     const randomIndex = Math.floor(Math.random() * quotes.length);
