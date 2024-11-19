@@ -1,0 +1,68 @@
+/* CSS for Subjects Page */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #007bff; /* Bright blue background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background: #f9f9f9; /* Light gray background */
+    padding: 30px 40px;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center;
+    width: 400px;
+}
+
+h2 {
+    color: black; 
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+button {
+    display: block;
+    width: 80%; /* Button width relative to container */
+    margin: 10px auto; /* Center buttons */
+    padding: 10px;
+    border: none;
+    border-radius: 20px; /* Rounded buttons */
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Individual button colors */
+button.physics {
+    background-color: #ff5733; /* Bright red-orange */
+}
+
+button.chemistry {
+    background-color: #ffc107; /* Bright yellow */
+}
+
+button.maths {
+    background-color: #28a745; /* Bright green */
+}
+
+button.biology {
+    background-color: #007bff; /* Bright blue */
+}
+
+button.timetable {
+    background-color: #6f42c1; /* Vibrant purple */
+}
+
+/* Hover effect */
+button:hover {
+    transform: scale(1.05); /* Slightly enlarge button */
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+}
