@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maths Take Test</title>
+  <link rel="stylesheet" href="qbstyle.css">
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>Take Test</h1>
+    <button id="start-test">Start Test</button>
+
+    <div id="test-section" style="display:none;">
+      <div id="timer">Time Left: 60 seconds</div>
+      <div id="question-container"></div>
+      <button id="submit-test" style="display:none;">Submit Test</button>
+    </div>
+
+    <div id="result-section" style="display:none;">
+      <h2>Your Score: <span id="score"></span></h2>
+      <p id="feedback"></p>
+      <button id="retry-test">Retry Test</button>
+    </div>
+  </div>
+  <script src="mathsquestionbank.js"></script>
+</body>
+</html>
