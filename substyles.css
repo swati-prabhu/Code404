@@ -16,7 +16,7 @@ body {
     border-radius: 10px; /* Rounded corners */
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
     text-align: center;
-    width: 400px;
+    width: 80%;
 }
 
 h2 {
@@ -59,6 +59,27 @@ button.biology {
 
 button.timetable {
     background-color: #6f42c1; /* Vibrant purple */
+}
+
+.streak-counter {
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.streak-counter p {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.study-btn {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
 }
 
 /* Hover effect */
