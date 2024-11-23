@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="substyles.css">
 </head>
 <body>
+    <div class="main">
     <div class="container subject-container">
         <h2>Choose a Subject : </h2>
         <button class="physics" onclick="window.location.href='physics.html'">Physics</button>
@@ -16,5 +17,10 @@
         <button class="biology" onclick="window.location.href='biology.html'">Biology</button>
         <button class="timetable" onclick="window.location.href='timetable.html'">Timetable</button>
     </div>
+    <div class="streak-counter">
+        <p>Current Streak: <span id="streak-count">0</span> days</p>
+    <button class="study-btn" onclick="markStudyDone()">Mark Study as Done</button>
+    </div></div>
+    <script src="streaks.js"></script>
 </body>
 </html>
