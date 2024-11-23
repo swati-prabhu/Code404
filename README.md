@@ -21,3 +21,7 @@ If you would like to add a new feature, fix a bug, or improve the documentation,
    5) Push to your branch (git push origin feature-branch).
    6) Open a Pull Request on GitHub.
 
+## Installation
+
+To get this website running download all these files on your local device in a single folder, continue by running the index.html file.
+    
